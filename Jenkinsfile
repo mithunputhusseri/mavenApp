@@ -24,7 +24,6 @@ pipeline {
 
 			echo 'Project Testing stage'
 
-			bat label: 'Test running', script: '''mvn test'''
 
 	       
 
