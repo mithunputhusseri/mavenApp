@@ -67,22 +67,17 @@ pipeline {
 
 	  
 
-	stage('SonarQube'){
-
-         steps{
-
-            bat label: '', script: '''mvn sonar:sonar \
-
+	stage('SonarQube analysis') {
+		steps{
+    withSonarQubeEnv('SonarQube') {
+      bat label: '', script: '''mvn clean package sonar:sonar \
 		 -Dsonar.host.url=http://localhost:9000 \
-
  		-Dsonar.login=ff5c276939ab066fea300810e7006165c6243c7b'''
-
-          }
-
-      }
-	
-	  
-	stage("Quality Gate") {
+    } 
+  }
+}
+  
+stage("Quality Gate") {
             steps {
                 timeout(time: 1, unit: 'HOURS') {
                     // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
